@@ -8,6 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView.Orientation
 
 
@@ -27,6 +29,8 @@ class MainActivity : AppCompatActivity(), ButtonFragment.ButtonInterface {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val dieViewModel = ViewModelProvider(this)[DieViewModel::class.java]
+
         /* TODO 1: Load fragment(s)
             - Show _only_ ButtonFragment if portrait
             - show _both_ fragments if Landscape
@@ -39,6 +43,8 @@ class MainActivity : AppCompatActivity(), ButtonFragment.ButtonInterface {
                 .replace(R.id.buttonContainer, ButtonFragment())//replaces empty button container with the button fragment
                 .replace(R.id.diceContainer, DieFragment())//replaces empty dice container with die fragment
                 .commit()
+
+            dieViewModel.rollDie()//rolls the die upon populating the containers
         }else{//if portrait
             supportFragmentManager.beginTransaction()
                 .replace(R.id.buttonContainer, ButtonFragment())//replaces the empty container with the button

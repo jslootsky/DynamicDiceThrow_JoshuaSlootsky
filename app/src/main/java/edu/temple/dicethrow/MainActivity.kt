@@ -33,14 +33,15 @@ class MainActivity : AppCompatActivity(), ButtonFragment.ButtonInterface {
           */
 
         //boolean - true if landscape, false if not
-        if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE){
+        //if landscape
+        if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE){//if in landscape orientation
             supportFragmentManager.beginTransaction()
-                .replace(R.id.buttonContainer, ButtonFragment())
-                .replace(R.id.diceContainer, DieFragment())
+                .replace(R.id.buttonContainer, ButtonFragment())//replaces empty button container with the button fragment
+                .replace(R.id.diceContainer, DieFragment())//replaces empty dice container with die fragment
                 .commit()
-        }else{
+        }else{//if portrait
             supportFragmentManager.beginTransaction()
-                .replace(R.id.buttonContainer, ButtonFragment())
+                .replace(R.id.buttonContainer, ButtonFragment())//replaces the empty container with the button
                 .commit()
         }
 
@@ -52,7 +53,13 @@ class MainActivity : AppCompatActivity(), ButtonFragment.ButtonInterface {
     // This callback function gets invoked when the child Fragment invokes it
     // Remember to place Fragment transactions on BackStack so then can be reversed
     override fun buttonClicked() {
-
+        //only replaces the button with the die if the device is in portrait orientation
+        if(resources.configuration.orientation != Configuration.ORIENTATION_LANDSCAPE){
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.buttonContainer, DieFragment())
+                .addToBackStack(null)//allows the user to return to the button if they press the back button
+                .commit()
+        }
     }
 
 

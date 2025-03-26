@@ -1,10 +1,14 @@
 package edu.temple.dicethrow
 
+import android.content.res.Configuration
 import android.os.Bundle
+import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.fragment.app.FragmentManager
+import androidx.recyclerview.widget.RecyclerView.Orientation
 
 
 /*
@@ -27,6 +31,19 @@ class MainActivity : AppCompatActivity(), ButtonFragment.ButtonInterface {
             - Show _only_ ButtonFragment if portrait
             - show _both_ fragments if Landscape
           */
+
+        //boolean - true if landscape, false if not
+        if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE){
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.buttonContainer, ButtonFragment())
+                .replace(R.id.diceContainer, DieFragment())
+                .commit()
+        }else{
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.buttonContainer, ButtonFragment())
+                .commit()
+        }
+
     }
 
     /* TODO 2: switch fragments if die rolled and in portrait (no need to switch fragments if Landscape)
